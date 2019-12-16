@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * @author mq_xu
+ * @author
  * @ClassName ArticleController
  * @Description 文章控制器
  * @Date 2019/11/11
@@ -83,7 +83,17 @@ public class ArticleController extends HttpServlet {
         out.close();
     }
 
+
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String url=req.getRequestURI();
+        int id = url.lastIndexOf("/");
+        String id1 = url.substring(id+1);
+        Result result = articleService.delete(Long.parseLong(id1));
+        PrintWriter out = resp.getWriter();
+        Gson gson = new GsonBuilder().create();
+        out.print(gson.toJson(result));
+        out.close();
     }
+
 }
